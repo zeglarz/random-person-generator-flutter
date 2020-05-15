@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:randompersongenerator/services/network.dart';
 
 import 'constants.dart';
@@ -21,6 +22,10 @@ String phone;
 String cell;
 String email;
 Map street;
+String city;
+String state;
+String country;
+String postcode;
 
 class _MainScreenState extends State<MainScreen> {
   @override
@@ -30,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void fetchData() async {
+    print(loading);
     var data = await network.getData();
     var randomPerson = data['results'][0];
 
@@ -55,6 +61,10 @@ class _MainScreenState extends State<MainScreen> {
     // Location
     var location = randomPerson['location'];
     street = location['street'];
+    city = location['city'];
+    country = location['country'];
+    postcode = location['postcode'].toString();
+
     print(street);
     print('$title $firstName $lastName');
     print(randomPerson);
@@ -110,7 +120,63 @@ class _MainScreenState extends State<MainScreen> {
                   color: Colors.white,
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
-            )
+            ),
+            Text(
+              'Age: $age',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Born: ${DateFormat("dd MMMM yyyy, H:mm").format(DateTime.parse(dob))}',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Phone: $cell',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'email: $email',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'street: ${street['number']} ${street['name']}',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'postcode: $postcode',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'city: $city',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'country: $country',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),
