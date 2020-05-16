@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:randompersongenerator/services/network.dart';
 
@@ -114,12 +115,17 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
-            Text(
-              '$title $firstName $lastName',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                FlutterClipboardManager.copyToClipBoard('$firstName $lastName');
+              },
+              child: Text(
+                '$title $firstName $lastName',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             Text(
               'Age: $age',
