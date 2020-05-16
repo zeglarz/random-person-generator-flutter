@@ -73,13 +73,17 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {});
   }
 
+  var scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.black87,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             !loading
                 ? Center(
@@ -117,7 +121,17 @@ class _MainScreenState extends State<MainScreen> {
                   ),
             GestureDetector(
               onTap: () {
-                FlutterClipboardManager.copyToClipBoard('$firstName $lastName');
+                FlutterClipboardManager.copyToClipBoard('$firstName $lastName')
+                    .then((result) {
+                  final snackBar = SnackBar(
+                    content: Text('$firstName $lastName Copied to Clipboard'),
+                    action: SnackBarAction(
+                      label: 'Dismiss',
+                      onPressed: () {},
+                    ),
+                  );
+                  scaffoldKey.currentState.showSnackBar(snackBar);
+                });
               },
               child: Text(
                 '$title $firstName $lastName',
