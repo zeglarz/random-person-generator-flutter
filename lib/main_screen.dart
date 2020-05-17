@@ -133,14 +133,26 @@ class _MainScreenState extends State<MainScreen> {
                   scaffoldKey.currentState.showSnackBar(snackBar);
                 });
               },
-              child: Text(
-                '$title $firstName $lastName',
-                style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 2.5,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white.withOpacity(0.7),
-                  fontFamily: 'Source Sans Pro',
+              child: Card(
+                color: Colors.white.withOpacity(0.8),
+                margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  title: Center(
+                    child: Text(
+                      '$title $firstName $lastName',
+                      style: TextStyle(
+                        fontSize: 20,
+                        letterSpacing: 2.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white.withOpacity(0.7),
+                        fontFamily: 'Source Sans Pro',
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
