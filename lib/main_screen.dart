@@ -136,9 +136,12 @@ class _MainScreenState extends State<MainScreen> {
               child: Text(
                 '$title $firstName $lastName',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+                  fontSize: 20,
+                  letterSpacing: 2.5,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white.withOpacity(0.7),
+                  fontFamily: 'Source Sans Pro',
+                ),
               ),
             ),
             Text(
