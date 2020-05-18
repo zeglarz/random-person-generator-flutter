@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:randompersongenerator/services/network.dart';
 
+import 'comonents/contact_tile.dart';
 import 'comonents/photo_avatar.dart';
 import 'constants.dart';
 
@@ -88,52 +88,20 @@ class _MainScreenState extends State<MainScreen> {
             !loading
                 ? PhotoAvatar(NetworkImage(thumbnail))
                 : PhotoAvatar(AssetImage('images/no-img.png')),
-            GestureDetector(
-              onTap: () {
-                FlutterClipboardManager.copyToClipBoard('$firstName $lastName')
-                    .then((result) {
-                  final snackBar = SnackBar(
-                    content: Text('$firstName $lastName Copied to Clipboard'),
-                    action: SnackBarAction(
-                      label: 'Dismiss',
-                      onPressed: () {},
-                    ),
-                  );
-                  scaffoldKey.currentState.showSnackBar(snackBar);
-                });
-              },
-              child: Card(
-                color: Colors.white.withOpacity(0.8),
-                margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: Center(
-                    child: Text(
-                      '$title $firstName $lastName',
-                      style: TextStyle(
-                        fontSize: 20,
-                        letterSpacing: 2.5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white.withOpacity(0.7),
-                        fontFamily: 'Source Sans Pro',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$firstName $lastName',
+              icon: Icons.person,
+              loading: loading,
+            ),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$age yo',
+              icon: Icons.book,
+              loading: loading,
             ),
             Text(
-              'Age: $age',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Born: ${DateFormat("dd MMMM yyyy, H:mm").format(DateTime.parse(dob))}',
+              'Born: ${DateFormat("dd MMMM yyyy").format(DateTime.parse(dob))}',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
