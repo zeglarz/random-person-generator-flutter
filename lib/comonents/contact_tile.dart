@@ -4,17 +4,22 @@ import 'package:skeleton_text/skeleton_text.dart';
 
 class ContactTile extends StatelessWidget {
   const ContactTile(
-      {@required this.scaffoldKey, this.content, this.icon, this.loading});
+      {@required this.scaffoldKey,
+      this.content,
+      this.icon,
+      this.loading,
+      this.fontSize = 15.0});
   final String content;
   final IconData icon;
   final bool loading;
+  final double fontSize;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FlutterClipboardManager.copyToClipBoard('$context').then((result) {
+        FlutterClipboardManager.copyToClipBoard('$content').then((result) {
           final snackBar = SnackBar(
             content: Text('$content copied to Clipboard'),
             action: SnackBarAction(
@@ -27,21 +32,25 @@ class ContactTile extends StatelessWidget {
       },
       child: !this.loading
           ? Card(
-              color: Colors.white.withOpacity(0.8),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              color: Colors.grey.shade200.withOpacity(0.6),
               margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: ListTile(
                 leading: Icon(
                   this.icon,
-                  color: Colors.white,
+                  color: Colors.black38,
                 ),
                 title: Center(
                   child: Text(
                     '$content',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: this.fontSize,
                       letterSpacing: 2.5,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.black38,
                       fontFamily: 'Source Sans Pro',
                     ),
                   ),

@@ -13,21 +13,21 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-String firstName;
-String lastName;
-String title;
-String thumbnail;
+String firstName = '';
+String lastName = '';
+String title = '';
+String thumbnail = '';
 bool loading = true;
-String dob;
-int age;
-String phone;
-String cell;
-String email;
-Map street;
-String city;
-String state;
-String country;
-String postcode;
+String dob = '${DateTime.now()}';
+int age = 0;
+String phone = '';
+String cell = '';
+String email = '';
+Map street = {};
+String city = '';
+String state = '';
+String country = '';
+String postcode = '';
 
 class _MainScreenState extends State<MainScreen> {
   @override
@@ -79,75 +79,89 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(190.0), // here the desired height
+
+        child: AppBar(
+            backgroundColor: Colors.transparent,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Colors.lightBlueAccent, Colors.orange],
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20,
+                  ),
+                  !loading
+                      ? PhotoAvatar(thumbnail, scaffoldKey)
+                      : PhotoAvatar(
+                          'images/no-img.png',
+                          scaffoldKey,
+                        ),
+                ],
+              ),
+            )),
+      ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: ListView(
           children: <Widget>[
-            !loading
-                ? PhotoAvatar(NetworkImage(thumbnail))
-                : PhotoAvatar(AssetImage('images/no-img.png')),
             ContactTile(
               scaffoldKey: scaffoldKey,
               content: '$firstName $lastName',
+              fontSize: 22,
               icon: Icons.person,
               loading: loading,
             ),
             ContactTile(
               scaffoldKey: scaffoldKey,
-              content: '$age yo',
-              icon: Icons.book,
+              content:
+                  ' ${DateFormat("dd MMMM yyyy").format(DateTime.parse(dob))} ($age)',
+              icon: Icons.cake,
               loading: loading,
             ),
-            Text(
-              'Born: ${DateFormat("dd MMMM yyyy").format(DateTime.parse(dob))}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$cell',
+              icon: Icons.phone,
+              loading: loading,
             ),
-            Text(
-              'Phone: $cell',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$email',
+              icon: Icons.email,
+              loading: loading,
+              fontSize: 12,
             ),
-            Text(
-              'email: $email',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '${street['number']} ${street['name']}',
+              icon: Icons.my_location,
+              loading: loading,
             ),
-            Text(
-              'street: ${street['number']} ${street['name']}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$postcode',
+              icon: Icons.local_post_office,
+              loading: loading,
             ),
-            Text(
-              'postcode: $postcode',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$city',
+              icon: Icons.location_city,
+              loading: loading,
             ),
-            Text(
-              'city: $city',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'country: $country',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            ContactTile(
+              scaffoldKey: scaffoldKey,
+              content: '$country',
+              icon: Icons.flag,
+              loading: loading,
             ),
           ],
         ),
