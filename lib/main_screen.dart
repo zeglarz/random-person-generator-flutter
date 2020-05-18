@@ -3,6 +3,7 @@ import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:randompersongenerator/services/network.dart';
 
+import 'comonents/photo_avatar.dart';
 import 'constants.dart';
 
 NetworkHelper network = NetworkHelper(randomAPI);
@@ -36,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void fetchData() async {
-    print(loading);
+    setState(() => loading = true);
     var data = await network.getData();
     var randomPerson = data['results'][0];
 
@@ -69,8 +70,7 @@ class _MainScreenState extends State<MainScreen> {
     print(street);
     print('$title $firstName $lastName');
     print(randomPerson);
-    loading = false;
-    setState(() {});
+    setState(() => loading = false);
   }
 
   var scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -86,39 +86,8 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             !loading
-                ? Center(
-                    child: Container(
-                      width: 150.0,
-                      height: 150.0,
-                      padding: EdgeInsets.all(7.0), // borde width
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF), // border color
-                        shape: BoxShape.circle,
-                      ),
-                      child: CircleAvatar(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.white,
-                          radius: 50,
-                          backgroundImage: NetworkImage(thumbnail)),
-                    ),
-                  )
-                : Center(
-                    child: Container(
-                      width: 150.0,
-                      height: 150.0,
-                      padding: EdgeInsets.all(7.0), // borde width
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF), // border color
-                        shape: BoxShape.circle,
-                      ),
-                      child: CircleAvatar(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.white,
-                        radius: 50,
-                        backgroundImage: AssetImage('images/no-img.png'),
-                      ),
-                    ),
-                  ),
+                ? PhotoAvatar(NetworkImage(thumbnail))
+                : PhotoAvatar(AssetImage('images/no-img.png')),
             GestureDetector(
               onTap: () {
                 FlutterClipboardManager.copyToClipBoard('$firstName $lastName')
