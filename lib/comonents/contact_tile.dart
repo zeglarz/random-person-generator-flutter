@@ -8,7 +8,7 @@ class ContactTile extends StatelessWidget {
       this.content,
       this.icon,
       this.loading,
-      this.fontSize = 15.0});
+      this.fontSize = 13.0});
   final String content;
   final IconData icon;
   final bool loading;
@@ -64,7 +64,7 @@ class ContactTile extends StatelessWidget {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(15.0),
                       color: Colors.grey[300]),
                 ),
               ),

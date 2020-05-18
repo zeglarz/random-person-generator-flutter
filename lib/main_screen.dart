@@ -69,9 +69,6 @@ class _MainScreenState extends State<MainScreen> {
     country = location['country'];
     postcode = location['postcode'].toString();
 
-    print(street);
-    print('$title $firstName $lastName');
-    print(randomPerson);
     _scrollController.animateTo(
       0.0,
       curve: Curves.easeOut,
@@ -121,6 +118,7 @@ class _MainScreenState extends State<MainScreen> {
           controller: _scrollController,
           reverse: false,
           children: <Widget>[
+            SizedBox(height: 10),
             ContactTile(
               scaffoldKey: scaffoldKey,
               content: '$firstName $lastName',
@@ -172,6 +170,7 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icons.flag,
               loading: loading,
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),

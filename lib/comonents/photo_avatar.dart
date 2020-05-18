@@ -12,7 +12,7 @@ class PhotoAvatar extends StatelessWidget {
       onTap: () {
         FlutterClipboardManager.copyToClipBoard('$image').then((result) {
           final snackBar = SnackBar(
-            content: Text('image url copied to Clipboard'),
+            content: Text('Image URL copied to Clipboard'),
             action: SnackBarAction(
               label: 'Dismiss',
               onPressed: () {},
@@ -21,27 +21,27 @@ class PhotoAvatar extends StatelessWidget {
           scaffoldKey.currentState.showSnackBar(snackBar);
         });
       },
-      child: Center(
+      child: Card(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100.0),
+        ),
         child: Container(
-          width: 150.0,
-          height: 150.0,
-          padding: EdgeInsets.all(7.0), // border width
+          padding: EdgeInsets.all(1.0), // borde width
           decoration: BoxDecoration(
-            color: Colors.white12, // border color
+            color: Colors.black12, // border color
             shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.black26,
-              width: 1.0,
-              style: BorderStyle.solid,
-            ),
           ),
           child: CircleAvatar(
-              foregroundColor: Colors.white70,
-              backgroundColor: Colors.white70,
-              radius: 50,
-              backgroundImage: image.startsWith('http')
-                  ? NetworkImage(image)
-                  : AssetImage(image)),
+            backgroundColor: Colors.white,
+            radius: 75,
+            child: CircleAvatar(
+                backgroundColor: Colors.white30,
+                radius: 70,
+                backgroundImage: image.startsWith('http')
+                    ? NetworkImage(image)
+                    : AssetImage(image)),
+          ),
         ),
       ),
     );
