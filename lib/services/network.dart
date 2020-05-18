@@ -6,8 +6,9 @@ class NetworkHelper {
   NetworkHelper(this.url);
   String url;
 
-  Future getData() async {
-    http.Response response = await http.get(this.url);
+  Future getData({countryList, gender}) async {
+    http.Response response = await http
+        .get('${this.url}/?nat=${countryList.join(",")}&gender=$gender');
     if (response.statusCode == 200) {
       String data = response.body;
       return jsonDecode(data);

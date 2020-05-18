@@ -13,6 +13,8 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
+ScrollController _scrollController = ScrollController();
+
 String firstName = '';
 String lastName = '';
 String title = '';
@@ -38,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void fetchData() async {
     setState(() => loading = true);
-    var data = await network.getData();
+    var data = await network.getData(countryList: [], gender: '');
     var randomPerson = data['results'][0];
 
     // Name Data
@@ -70,6 +72,11 @@ class _MainScreenState extends State<MainScreen> {
     print(street);
     print('$title $firstName $lastName');
     print(randomPerson);
+    _scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
     setState(() => loading = false);
   }
 
@@ -111,6 +118,8 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: SafeArea(
         child: ListView(
+          controller: _scrollController,
+          reverse: false,
           children: <Widget>[
             ContactTile(
               scaffoldKey: scaffoldKey,
@@ -148,7 +157,7 @@ class _MainScreenState extends State<MainScreen> {
             ContactTile(
               scaffoldKey: scaffoldKey,
               content: '$postcode',
-              icon: Icons.local_post_office,
+              icon: Icons.markunread_mailbox,
               loading: loading,
             ),
             ContactTile(
