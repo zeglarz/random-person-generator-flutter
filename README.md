@@ -1,7 +1,6 @@
-# randompersongenerator
+# Random Person Generator
 
-A new Flutter application.
-
+My first app I coded in Flutter I have recently publish in Google Play, which you may check [here: Google Play Store](https://play.google.com/store/apps/details?id=com.konradrudnicki.randompersongenerator)
 ## Getting Started
 
 This project is a starting point for a Flutter application.
