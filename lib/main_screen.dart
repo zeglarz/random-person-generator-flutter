@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:randompersongenerator/services/network.dart';
@@ -14,7 +16,7 @@ class MainScreen extends StatefulWidget {
 }
 
 ScrollController _scrollController = ScrollController();
-
+int randomNumber;
 String firstName = '';
 String lastName = '';
 String title = '';
@@ -39,42 +41,63 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void fetchData() async {
+    Random random = Random();
+    randomNumber = random.nextInt(offlineUsers.length);
+
+    print(randomNumber);
     setState(() => loading = true);
-    var data = await network.getData(countryList: [], gender: '');
-    var randomPerson = data['results'][0];
+    try {
+      var data = await network.getData(countryList: [], gender: '');
 
-    // Name Data
-    var nameData = randomPerson['name'];
-    firstName = nameData['first'];
-    lastName = nameData['last'];
-    title = nameData['title'];
-    // Images
-    var pictures = randomPerson['picture'];
-    thumbnail = pictures['large'];
+      var randomPerson = data['results'][0];
 
-    // DOB
-    var dateOfBirth = randomPerson['dob'];
-    dob = dateOfBirth['date'];
-    age = dateOfBirth['age'];
+      // Name Data
+      var nameData = randomPerson['name'];
+      firstName = nameData['first'];
+      lastName = nameData['last'];
+      title = nameData['title'];
+      // Images
+      var pictures = randomPerson['picture'];
+      thumbnail = pictures['large'];
 
-    // Contact
-    phone = randomPerson['phone'];
-    cell = randomPerson['cell'];
-    email = randomPerson['email'];
+      // DOB
+      var dateOfBirth = randomPerson['dob'];
+      dob = dateOfBirth['date'];
+      age = dateOfBirth['age'];
 
-    // Location
-    var location = randomPerson['location'];
-    street = location['street'];
-    city = location['city'];
-    country = location['country'];
-    postcode = location['postcode'].toString();
+      // Contact
+      phone = randomPerson['phone'];
+      cell = randomPerson['cell'];
+      email = randomPerson['email'];
 
-    _scrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
-    setState(() => loading = false);
+      // Location
+      var location = randomPerson['location'];
+      street = location['street'];
+      city = location['city'];
+      country = location['country'];
+      postcode = location['postcode'].toString();
+
+      _scrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+      setState(() => loading = false);
+    } catch (e) {
+      print('catched $e');
+      setState(() => loading = false);
+      firstName = offlineUsers[randomNumber]['first'];
+      lastName = offlineUsers[randomNumber]['last'];
+      title = offlineUsers[randomNumber]['title'];
+      thumbnail = offlineUsers[randomNumber]['large'];
+      phone = offlineUsers[randomNumber]['phone'];
+      cell = offlineUsers[randomNumber]['cell'];
+      email = offlineUsers[randomNumber]['email'];
+      street = offlineUsers[randomNumber]['street'];
+      city = offlineUsers[randomNumber]['city'];
+      country = offlineUsers[randomNumber]['country'];
+      postcode = offlineUsers[randomNumber]['postcode'].toString();
+    }
   }
 
   var scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -176,6 +199,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
+        backgroundColor: Colors.orangeAccent,
         onPressed: fetchData,
       ),
     );

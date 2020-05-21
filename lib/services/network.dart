@@ -7,13 +7,17 @@ class NetworkHelper {
   String url;
 
   Future getData({countryList, gender}) async {
-    http.Response response = await http
-        .get('${this.url}/?nat=${countryList.join(",")}&gender=$gender');
-    if (response.statusCode == 200) {
-      String data = response.body;
-      return jsonDecode(data);
-    } else {
-      print(response.statusCode);
+    try {
+      http.Response response = await http
+          .get('${this.url}/?nat=${countryList.join(",")}&gender=$gender');
+      if (response.statusCode == 200) {
+        String data = response.body;
+        return jsonDecode(data);
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

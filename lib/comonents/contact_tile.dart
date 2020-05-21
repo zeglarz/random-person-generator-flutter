@@ -36,7 +36,7 @@ class ContactTile extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
-              color: Colors.grey.shade200.withOpacity(0.6),
+              color: Colors.grey.shade200.withOpacity(0.7),
               margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: ListTile(
                 leading: Icon(
