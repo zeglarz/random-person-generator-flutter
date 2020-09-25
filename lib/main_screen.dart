@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:randompersongenerator/services/network.dart';
 
-import 'comonents/contact_tile.dart';
-import 'comonents/photo_avatar.dart';
+import 'components/contact_tile.dart';
+import 'components/photo_avatar.dart';
 import 'constants.dart';
 
 NetworkHelper network = NetworkHelper(randomAPI);
@@ -41,8 +41,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void fetchData() async {
-    Random random = Random();
-    randomNumber = random.nextInt(offlineUsers.length);
+    randomNumber = Random().nextInt(offlineUsers.length);
 
     print(randomNumber);
     setState(() => loading = true);
@@ -84,6 +83,15 @@ class _MainScreenState extends State<MainScreen> {
       );
       setState(() => loading = false);
     } catch (e) {
+      final snackBar = SnackBar(
+        content: Text(
+            'You seem to be offlne, please check your connections in order to get access to broader person database.'),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          onPressed: () {},
+        ),
+      );
+      scaffoldKey.currentState.showSnackBar(snackBar);
       print('catched $e');
       setState(() => loading = false);
       firstName = offlineUsers[randomNumber]['first'];
